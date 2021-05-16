@@ -115,7 +115,7 @@ int sc_countSet(int value) {
 }
 
 int sc_countInkrement() {
-    if (instruction_counter == N - 1) return -1;
+    if (instruction_counter + 1 >= N) return -1;
     instruction_counter++;
     return 0;
 }

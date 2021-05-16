@@ -1,6 +1,5 @@
 #ifndef MYCONSOLE_H
 #define MYCONSOLE_H
-
 #include "../mt/myTerm.h"
 #include "../mbg/myBigChar.h"
 #include "../msc/mySimpleComputer.h"
@@ -58,6 +57,12 @@ void setPointer();
 
 void messageBox(int x, int y, int dx, int dy);
 void clrMessageBox(int x, int y);
+
+void alarmPointRight();
+void pointRight();
+void pointLeft();
+void pointUp();
+void pointDown();	
 
 //Visual part
 void showAll();

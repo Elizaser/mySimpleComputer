@@ -1,4 +1,7 @@
 #include "myConsole.h"
+#include <unistd.h>
+#include <signal.h>
+#include <sys/time.h>
 
 
 void console() {
@@ -10,21 +13,17 @@ void console() {
     mt_clrscr(); fflush(stdout);
     sc_regSet(IGNORTACT, 0);
     setVisualNull();
-
+    sigInit(); 
+    setTimer(1, 0, 1, 0);
     termInit();
     while (key != EXIT) {
-        showAll();
-        rk_readKey(&key);
-        
+    	showAll();
         sc_regGet(IGNORTACT, &value);
-
+		rk_readKey(&key);
        	if (!value) {
 			switch (key) {
-			case RIGHT: 
-				if (pointer_mem < N - 1) {
-					pointer_mem++;
-					updateMemVisual();
-				}
+			case RIGHT:
+					pointRight();
 				break;
 			case LEFT: 
 				if (pointer_mem > 0) {
@@ -59,34 +58,75 @@ void console() {
 			default: 
 				break;
 			}
-		} else {
-			if (pointer_mem < N - 1) {
-					pointer_mem++;
-					updateMemVisual();
-			}
-			updateMemVisual();
 		}
-
 
 		switch (key) {
 		case RESET:
-			reset();
+			raise(SIGUSR1);
+			break;
+		case RUN:
 			break;
 		default:
 			break;
 		}
-	}
+    }
 
     rk_myTermRestore(NULL);
     mt_gotoXY(60, 1);
 }
 
 void reset() {
+	pointer_mem = 0;
 	sc_memoryInit();
 	sc_regInit();
 	sc_countSet(0);
 	setVisualNull();
 }
+
+void alarmPointRight() {
+	int value; 
+	sc_regGet(IGNORTACT, &value);
+	if (value) {
+		return;
+	}
+	if (pointer_mem + 1 < N) {
+		pointer_mem++;
+		updateMemVisual();
+	}
+}
+
+void pointRight() {
+	if (pointer_mem + 1 < N) {
+		pointer_mem++;
+		updateMemVisual();
+	}
+}
+
+
+void pointLeft() {
+	if (pointer_mem - 1 > 0) {
+		pointer_mem--;
+		updateMemVisual();
+	}
+
+}
+
+void pointUp() {
+	if (pointer_mem + 10 < N) {
+		pointer_mem += 10;
+		updateMemVisual();
+	}
+
+}
+
+void pointDown() {
+	if (pointer_mem + 10 < N) {
+		pointer_mem += 10;
+		updateMemVisual();
+	}	
+}
+
+
 
 int readFromConsole() {
 	rk_myTermRestore(NULL);

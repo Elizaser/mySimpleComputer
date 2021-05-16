@@ -12,11 +12,8 @@ int compare(char *buf, char *sym) {
 }
 
 int rk_readKey(enum Key *key) {
-
     int term = open(TERM, O_RDWR);
     char buf[8]; buf[7] = 0;
-
-    printf("%d\n", term);
 
     tcgetattr(0, &origin);
     new_term_state = termState;
@@ -33,7 +30,7 @@ int rk_readKey(enum Key *key) {
         fprintf(file, "%s", buf);
         fclose(file);
     }
-    
+
     *key = NONE;
     if (compare(buf, "l")) { *key = KLOAD; }
     if (compare(buf, "s")) { *key = SAVE; }
@@ -43,7 +40,7 @@ int rk_readKey(enum Key *key) {
     if (compare(buf, "q")) { *key = EXIT; }
     if (compare(buf, "a")) { *key = F5; }
     if (compare(buf, "c")) { *key = F6; }
-    
+
     if (strncmp(buf, "\E[[E", 4) == 0) { *key = F5; }
     if (strncmp(buf, "\E[17~", 5) == 0) { *key = F6; }
     if (strncmp(buf, "\E[A", 3) == 0) { *key = UP; }
