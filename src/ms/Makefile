@@ -22,4 +22,3 @@ build:
 	
 clear:
 	-rm -rf build
-	-rm msa

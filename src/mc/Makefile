@@ -36,3 +36,5 @@ build:
 clear:
 	-rm -rf build
 	-rm mca
+	cd ../ms && make clear
+	cd ../mk && make clear
