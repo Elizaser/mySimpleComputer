@@ -10,7 +10,9 @@ void console() {
     int value;
     pointer_mem = 0;
         
-    mt_clrscr(); fflush(stdout);
+    mt_clrscr(); 
+    fflush(stdout);
+    fflush(stdin);
     sc_regSet(IGNORTACT, 0);
     setVisualNull();
     sigInit(); 
@@ -49,11 +51,15 @@ void console() {
 			case KLOAD:
 				sc_memoryLoad("memory.dat");
 				break;
-			case F5: 
+			case F5:
+				setTimer(0, 0, 0, 0);
 				setAcc();
+				setTimer(1, 0, 1, 0);
 				break; 
 			case F6:
+				setTimer(0, 0, 0, 0);
 				setPointer();
+				setTimer(1, 0, 1, 0);
 				break;
 			default: 
 				break;
@@ -63,8 +69,6 @@ void console() {
 		switch (key) {
 		case RESET:
 			raise(SIGUSR1);
-			break;
-		case RUN:
 			break;
 		default:
 			break;
@@ -194,7 +198,8 @@ void clrMessageBox(int x, int y) {
 }
 
 void setPointer() {
-	
+	sc_regSet(IGNORTACT, 1);
+
 	int n, m;
     mt_getscreensize(&n, &m);
     int x = n / 3 + STD_DX_MEM + 10, y = m / 4 + 2;
@@ -215,12 +220,14 @@ void setPointer() {
     mt_setbgcolor(BLACK);
 	clrMessageBox(x, y);
 	setVisualNull();
+	sc_regSet(IGNORTACT, 0);
 }
 
+struct termios new_term_state;
+struct termios origin;
+
 void setAcc() {
-	FILE *f = fopen("globalht.txt", "at");
-	putc('Y', f);
-	fclose(f);
+	sc_regSet(IGNORTACT, 1);
 
 	int n, m;
     mt_getscreensize(&n, &m);
@@ -236,7 +243,7 @@ void setAcc() {
     mt_setbgcolor(BLACK);
 
 	int value;
-	fscanf(stdin, "%x", &value); //
+	fscanf(stdin, "%x", &value); 
 	if (value > 0) value = value & 0x3fff;
 		else {
 			value--;
@@ -248,6 +255,7 @@ void setAcc() {
     mt_setbgcolor(BLACK);
 	clrMessageBox(x, y);
     setVisualNull();
+    sc_regSet(IGNORTACT, 0);
 }
 
 int visualRegSet(int flag, int value) {

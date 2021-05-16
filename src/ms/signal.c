@@ -18,12 +18,10 @@ void signHandler(int signo) {
 
 void sigInit() {
 	struct sigaction sa;
-    sa.sa_flags = 0;
-
-    sa.sa_handler = signHandler; // method in console.c
-    sigaction(SIGALRM, &sa, NULL);
     
-    sa.sa_handler = signHandler; // method in console.c
+    sa.sa_flags = 0;
+    sa.sa_handler = signHandler;
+    sigaction(SIGALRM, &sa, NULL);
     sigaction(SIGUSR1, &sa, NULL);
 }
 
