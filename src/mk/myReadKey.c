@@ -12,27 +12,17 @@ int compare(char *buf, char *sym) {
 }
 
 int rk_readKey(enum Key *key) {
-
     int term = open(TERM, O_RDWR);
     char buf[8]; buf[7] = 0;
 
-    printf("%d\n", term);
-
     tcgetattr(0, &origin);
     new_term_state = termState;
-    rk_myTermRegime(&new_term_state, 0, 1, 0, 0, 1);
-
-    int num = read(term, &buf, 5);
-    if (num < 0) {
-        FILE *file = fopen("globalhs.txt", "wt");
-        putc('N', file);
-        fclose(file);
-    }   else {
-        FILE *file = fopen("globalht.txt", "wt");
-        putc('Y', file);
-        fprintf(file, "%s", buf);
-        fclose(file);
-    }
+    rk_myTermRegime(&new_term_state, 0, 1, 0, 0, 1);//некан
+    
+    read(term, &buf, 5);
+    
+    tcsetattr(0, TCSANOW, &origin);
+    close(term);
     
     *key = NONE;
     if (compare(buf, "l")) { *key = KLOAD; }
@@ -52,9 +42,6 @@ int rk_readKey(enum Key *key) {
     if (strncmp(buf, "\E[D", 3) == 0) { *key = LEFT; }
     if (strcmp(buf, "m") == 0) { *key = CONS; }
 
-    rk_myTermRegime(&new_term_state, 1, 0, 0, 1, 1);
-    tcsetattr(0, TCSANOW, &origin);
-    close(term);
     return 0;
 }
 

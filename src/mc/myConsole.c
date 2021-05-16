@@ -3,8 +3,7 @@
 void console() {
 
     enum Key key = NONE;
-    int value;
-    pointer_mem = 0;
+    pointer_mem = 0;//текущий адрес
         
     mt_clrscr(); 
     fflush(stdout);
@@ -15,6 +14,7 @@ void console() {
     while (key != EXIT) {
         showAll();
         rk_readKey(&key);    
+    	int value;
         sc_regGet(IGNORTACT, &value);
        	if (!value) {
 			switch (key) {
