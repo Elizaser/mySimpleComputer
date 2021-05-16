@@ -10,16 +10,12 @@ all: build lib mca
 
 lib:
 	make mka
-	make msa
 
 mka:
 	cd ../mk && make
 
-msa:
-	cd ../ms && make
-
 mca: $(BUILD)main_console.o $(BUILD)mc.a
-	$(CC) $(FLAGS) mca $(BUILD)main_console.o -L. $(BUILD)mc.a ../mt/build/mt.a ../msc/build/msc.a ../mk/build/mk.a ../mbg/build/mbg.a ../ms/build/ms.a
+	$(CC) $(FLAGS) mca $(BUILD)main_console.o -L. $(BUILD)mc.a ../mt/build/mt.a ../msc/build/msc.a ../mk/build/mk.a ../mbg/build/mbg.a
 
 $(BUILD)main_console.o: main_console.c
 	$(CC) $(CFLAGS) -c main_console.c -o $@
@@ -36,5 +32,4 @@ build:
 clear:
 	-rm -rf build
 	-rm mca
-	cd ../ms && make clear
 	cd ../mk && make clear

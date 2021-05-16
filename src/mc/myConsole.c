@@ -1,23 +1,21 @@
 #include "myConsole.h"
 
-
 void console() {
 
     enum Key key = NONE;
     int value;
     pointer_mem = 0;
         
-    mt_clrscr(); fflush(stdout);
+    mt_clrscr(); 
+    fflush(stdout);
     sc_regSet(IGNORTACT, 0);
     setVisualNull();
 
     termInit();
     while (key != EXIT) {
         showAll();
-        rk_readKey(&key);
-        
+        rk_readKey(&key);    
         sc_regGet(IGNORTACT, &value);
-
        	if (!value) {
 			switch (key) {
 			case RIGHT: 
@@ -60,13 +58,8 @@ void console() {
 				break;
 			}
 		} else {
-			if (pointer_mem < N - 1) {
-					pointer_mem++;
-					updateMemVisual();
-			}
 			updateMemVisual();
 		}
-
 
 		switch (key) {
 		case RESET:
@@ -82,6 +75,7 @@ void console() {
 }
 
 void reset() {
+	pointer_mem = 0;
 	sc_memoryInit();
 	sc_regInit();
 	sc_countSet(0);

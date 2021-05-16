@@ -5,7 +5,6 @@
 #include "../mbg/myBigChar.h"
 #include "../msc/mySimpleComputer.h"
 #include "../mk/myReadKey.h"
-#include "../ms/signal.h"
 
 #define STD_X_MEM 1
 #define STD_Y_MEM 1
