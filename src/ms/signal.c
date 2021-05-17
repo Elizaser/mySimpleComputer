@@ -31,4 +31,4 @@ void setTimer(long it_sec, long it_usec, long val_sec, long val_usec) {
 	nval.it_value.tv_sec = val_sec;
 	nval.it_value.tv_usec = val_usec;
 	setitimer(ITIMER_REAL, &nval, &oval);
-}o
+}
