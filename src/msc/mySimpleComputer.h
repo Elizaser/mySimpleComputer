@@ -4,9 +4,9 @@
 #define N 100
 #define M 10
 
-#define ERRORADD  1
-#define ERRORFLAG 2
-#define ERRORFILE 3
+#define ERRORADD  1 // выход за границы массива
+#define ERRORFLAG 2 // 
+#define ERRORFILE 3 // файл не открылся
 #define ERRORCOMS 4
 #define ERROROPER 5
 

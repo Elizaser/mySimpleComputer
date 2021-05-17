@@ -26,9 +26,9 @@
 int command;
 int operand;
 
-int pointer_mem;
+int pointer_mem; //адрес ячейки
 
-int access_inout;
+int access_inout; //
 int access_mem;
 int access_oper;
 int access_acc;

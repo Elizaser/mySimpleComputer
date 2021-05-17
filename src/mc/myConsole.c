@@ -68,7 +68,7 @@ void console() {
 
 		switch (key) {
 		case RESET:
-			raise(SIGUSR1);
+			raise(SIGUSR1);//посылается сигнал в систему 
 			break;
 		default:
 			break;
@@ -244,7 +244,7 @@ void setAcc() {
 
 	int value;
 	fscanf(stdin, "%x", &value); 
-	if (value > 0) value = value & 0x3fff;
+	if (value > 0) value = value & 0x3fff;//маска число или команда
 		else {
 			value--;
 			value = ~value;

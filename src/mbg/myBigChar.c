@@ -62,7 +62,7 @@ int bc_printbigchar(int symbol[2], int x, int y,
     mt_setfgcolor(WHITE);
     int n, m;
     mt_getscreensize(&n, &m);
-    mt_gotoXY(3, n);
+    mt_gotoXY(3, n); //низ
 
     return 0;
 }
@@ -70,9 +70,9 @@ int bc_printbigchar(int symbol[2], int x, int y,
 int bc_setbigcharpos(int *big, int x, int y, int value) {
 	if (-1 < x && x < 8 && -1 < y && y < 8) {
 		if (value) {
-			big[x / 4] = big[x / 4] | (0x1 << (8 * (4 - x) - 1 - y));
+			big[x / 4] = big[x / 4] | (0x1 << (8 * (4 - x) - 1 - y)); // [i*N+j] в 3х мерный
 		} else {
-			big[x / 4] = big[x / 4] & (~(0x1 << (8 * (4 - x) - 1 - y)));
+			big[x / 4] = big[x / 4] & (~(0x1 << (8 * (4 - x) - 1 - y)));// y - j, x - i 
 		}
 	}
 	return -1;

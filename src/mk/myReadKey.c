@@ -60,7 +60,7 @@ int rk_myTermSave(struct termios *termState) {
 }
 
 int rk_myTermRestore(struct termios *currState) {
-    return tcsetattr(0, TCSADRAIN, &termState);
+    return tcsetattr(0, TCSADRAIN, &currState);
 }
 
 int rk_myTermRegime(struct termios *currState, int regime, 
